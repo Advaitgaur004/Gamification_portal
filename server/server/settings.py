@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'TA',
     'drf_yasg',
+    'schema_graph',
 ]
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://127.0.0.1:8000"]
@@ -178,4 +179,9 @@ SWAGGER_SETTINGS = {
             'name': 'Authorization'
         }
     },
+}
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
