@@ -24,7 +24,7 @@ class viewTaskforStudent(serializers.ModelSerializer):
         fields = ['id','title','description','xp_reward','deadline']
 
 
-class UserSerializerWithToken(InstructorProfileSerializer):
+class UserSerializerWithToken_(InstructorProfileSerializer):
     access = serializers.CharField(source='access_token', read_only=True)
     refresh = serializers.CharField(source='refresh_token', read_only=True)
     class Meta:

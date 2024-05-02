@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from Student.models import StudentProfile
 from .models import InstructorProfile, StudentTaskStatus,Task, Extra_TA
-from .serializers import InstructorProfileSerializer, StudentTaskStatusSerializer, TaskSerializer,UserSerializerWithToken
+from .serializers import InstructorProfileSerializer, StudentTaskStatusSerializer, TaskSerializer,UserSerializerWithToken_
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
@@ -95,7 +95,7 @@ class ModifyTaskViewSet(GenericAPIView, mixins.UpdateModelMixin, mixins.DestroyM
             return Response({'Task not found'}, status=status.HTTP_404_NOT_FOUND)
 
     
-class RegisterUserView(generics.GenericAPIView, mixins.CreateModelMixin):
+class RegisterFacultyView(generics.GenericAPIView, mixins.CreateModelMixin):
     serializer_class = InstructorProfileSerializer
 
     def post(self, request, *args, **kwargs):
@@ -133,7 +133,7 @@ class RegisterUserView(generics.GenericAPIView, mixins.CreateModelMixin):
         except Exception as e:
             message = {'detail': str(e)}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
-class UserProfileViewSet(generics.GenericAPIView):
+class FacultyProfileViewSet(generics.GenericAPIView):
     queryset = InstructorProfile.objects.all()
     serializer_class = InstructorProfileSerializer
     permission_classes = [IsAuthenticated]
@@ -146,32 +146,32 @@ class UserProfileViewSet(generics.GenericAPIView):
         except ObjectDoesNotExist:
             return Response({'You are Not a faculty'}, status=status.HTTP_404_NOT_FOUND)
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+class MyTokenObtainPairSerializer_faculty(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         user = self.user
-        serializer = UserSerializerWithToken(user)
+        serializer = UserSerializerWithToken_(user)
         data.update(serializer.data)
 
         return data
     def get_token(self, user):
         return super().get_token(user)
     
-class MyTokenObtainPairView(APIView):
-    serializer_class = MyTokenObtainPairSerializer
+class MyTokenObtainPairView_faculty(APIView):
+    serializer_class = MyTokenObtainPairSerializer_faculty
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.validated_data)
 
-class TokenRefreshSerializers(serializers.ModelSerializer):
+class TokenRefreshSerializers_faculty(serializers.ModelSerializer):
     class Meta:
         model = InstructorProfile
         fields = ['refreshtoken']
 
-class TokenRefreshView(GenericAPIView, mixins.CreateModelMixin):
-    serializer_class = TokenRefreshSerializers
+class FacultyTokenRefreshView(GenericAPIView, mixins.CreateModelMixin):
+    serializer_class = TokenRefreshSerializers_faculty
     def post(self, request, *args, **kwargs):
         refresh_token = request.data.get('refreshtoken')
         if refresh_token:
