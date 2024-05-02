@@ -4,8 +4,10 @@ from .models import InstructorProfile, StudentTaskStatus,Task
 class InstructorProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstructorProfile
-        fields = ['id', 'username', 'email','is_staff','is_active']
-
+        fields = ['id', 'username', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 class StudentTaskStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentTaskStatus
@@ -21,7 +23,7 @@ class viewTaskforStudent(serializers.ModelSerializer):
         model = Task
         fields = ['id','title','description','xp_reward','deadline']
 
-        
+
 class UserSerializerWithToken(InstructorProfileSerializer):
     access = serializers.CharField(source='access_token', read_only=True)
     refresh = serializers.CharField(source='refresh_token', read_only=True)
