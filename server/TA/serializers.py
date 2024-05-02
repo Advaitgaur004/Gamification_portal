@@ -4,7 +4,7 @@ from .models import InstructorProfile, StudentTaskStatus,Task
 class InstructorProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstructorProfile
-        fields = '__all__'
+        fields = ['id', 'username', 'email','is_staff','is_active']
 
 class StudentTaskStatusSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,3 +15,18 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+
+class viewTaskforStudent(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['id','title','description','xp_reward','deadline']
+
+        
+class UserSerializerWithToken(InstructorProfileSerializer):
+    access = serializers.CharField(source='access_token', read_only=True)
+    refresh = serializers.CharField(source='refresh_token', read_only=True)
+    class Meta:
+        model = InstructorProfile
+        fields = ['id', 'username', 'email', 'is_staff', 'is_active', 'access', 'refresh']
+
+

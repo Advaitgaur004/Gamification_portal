@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import StudentProfile, Badge
+from .models import StudentProfile, Badge, Extra
 
-admin.site.register(Badge)
-admin.site.register(StudentProfile)
+class StudentProfileAdmin(admin.ModelAdmin):
+    list_display = ['username', 'email', 'Rollno', 'total_xp']
+
+class BadgeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'xp_required']
+
+admin.site.register(Badge, BadgeAdmin)
+admin.site.register(StudentProfile, StudentProfileAdmin)
+admin.site.register(Extra)
