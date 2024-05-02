@@ -8,10 +8,10 @@ from schema_graph.views import Schema
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Delivery API",
+      title="Gamification Portal API",
       default_version='v1',
-      description="Rest API for a Delivery service",
-      contact=openapi.Contact(email="auspicious54321@gmail.com"),
+      description="Gamification Portal API for students and TAs",
+      contact=openapi.Contact(email="b22cs004@iitj.ac.in"),
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
