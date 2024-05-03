@@ -61,6 +61,7 @@ class TaskViewSet(GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin
     
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
 class ModifyTaskViewSet(GenericAPIView, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
